@@ -1,9 +1,8 @@
-﻿Shader "Unlit/rim"
+﻿Shader "Unlit/iceCat"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "black" {}
-        _NoiseTex ("Noise Texture", 2D) = "white" {}
         _BumpRamp ("Ramp Texture", 2D) = "white" {}
         [HDR]
         _RimColor ("Rim Color", Color) = (1, 0, 0, 1)
@@ -50,7 +49,6 @@
             };
 
             sampler2D _MainTex;
-            sampler2D _NoiseTex;
             sampler2D _BumpRamp;
             fixed4 _RimColor;
             fixed _RimPower;
