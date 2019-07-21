@@ -61,7 +61,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Exponent1: 4.1
+    - _Exponent1: 4.9
     - _Exponent2: 1
     - _Exponent3: 20
     - _Exponent4: 1.9

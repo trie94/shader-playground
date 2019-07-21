@@ -44,7 +44,7 @@
             };
 
             sampler2D _MainTex;
-            float4 _MainTex_ST;
+            // float4 _MainTex_ST;
             fixed4 _RimColor;
             fixed _RimPower;
             fixed4 _FaceColor;
@@ -54,7 +54,8 @@
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.localPos = v.vertex;
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                // o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.uv = v.uv;
                 o.normal = v.normal;
                 return o;
             }
