@@ -44,8 +44,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 574a84e1d35e849ccb7f46e2e124ecd3, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 7e31aac95a07949f19a59b3f98e1562b, type: 3}
+        m_Scale: {x: 0, y: 0}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -68,9 +68,9 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FurDensity: 500
-    - _FurLength: 1.01
-    - _FurShading: 1.26
+    - _FurDensity: 158
+    - _FurLength: 0.0007
+    - _FurShading: 0.156
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -80,7 +80,8 @@ Material:
     - _NoiseIntensity: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Shininess: 2
+    - _RimPower: 4.21
+    - _Shininess: 17.3
     - _SmoothnessTextureChannel: 0
     - _Specular: 1
     - _SpecularHighlights: 1
@@ -91,4 +92,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LightColor0: {r: 0.14706765, g: 0.5943396, b: 0.058873262, a: 1}
-    - _Specular: {r: 0.8196079, g: 0.8196079, b: 0.8196079, a: 1}
+    - _LocalForce: {r: 25.46, g: -24.7, b: -100.29, a: 0}
+    - _RimColor: {r: 0.99056596, g: 0.62089306, b: 0.26633137, a: 0.50980395}
+    - _Specular: {r: 0.5660378, g: 0.55318844, b: 0.5366679, a: 1}

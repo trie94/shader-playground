@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: catFurLimb
-  m_Shader: {fileID: 4800000, guid: 51d97a83d95f04b2e83243077bfc07d9, type: 3}
+  m_Name: eye
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -39,20 +39,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _FurTex:
-        m_Texture: {fileID: 2800000, guid: c039f02a5a63f4262b172d461c1a3bc0, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 7e31aac95a07949f19a59b3f98e1562b, type: 3}
-        m_Scale: {x: 0, y: 0}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _NoiseTex:
-        m_Texture: {fileID: 2800000, guid: 62d36a8b77c5d40d3b6ec53b1444d5ad, type: 3}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -68,29 +60,18 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FurDensity: 158
-    - _FurLength: 0.003
-    - _FurShading: 0.156
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0.726
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NoiseFreq: 100
-    - _NoiseIntensity: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimPower: 5
-    - _Shininess: 2
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LightColor0: {r: 1, g: 1, b: 1, a: 1}
-    - _LocalForce: {r: 0, g: -5, b: 0, a: 0}
-    - _RimColor: {r: 0.99056596, g: 0.62089306, b: 0.26633137, a: 0.50980395}
-    - _Specular: {r: 0.5660378, g: 0.55318844, b: 0.5366679, a: 1}
