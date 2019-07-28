@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: skybox 1
-  m_Shader: {fileID: 4800000, guid: 1bd21c9be7f6f4549a0817ebff94e8d9, type: 3}
-  m_ShaderKeywords: _SUNDISK_HIGH_QUALITY _SWITCH2_ON _SWITCH3_ON
+  m_Name: drawer
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -56,16 +56,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AtmosphereThickness: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Exponent1: 4.9
-    - _Exponent2: 1
-    - _Exponent3: 20
-    - _Exponent4: 1.9
-    - _Exposure: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -76,29 +70,8 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _SunDisk: 2
-    - _SunSize: 0.04
-    - _SunSizeConvergence: 5
-    - _Switch2: 1
-    - _Switch3: 1
-    - _Switch4: 0
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.6698113, g: 0.65220845, b: 0.628738, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 1, g: 0.7411765, b: 0.8784314, a: 1}
-    - _Color2: {r: 0.5990566, g: 1, b: 0.9640238, a: 1}
-    - _Color3: {r: 0.09264862, g: 0.09433961, b: 0.085884646, a: 1}
-    - _Color4: {r: 1, g: 1, b: 0, a: 1}
-    - _Direction1: {r: 0, g: 1, b: 0, a: 1}
-    - _Direction2: {r: 0, g: 1, b: 0, a: 0}
-    - _Direction3: {r: -0.3, g: -1, b: -0.2, a: 1}
-    - _Direction4: {r: 0, g: 1, b: 0, a: 1}
+    - _Color: {r: 0.31132078, g: 0.22888526, b: 0.1806248, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GroundColor: {r: 0.23251157, g: 0.25500536, b: 0.5188679, a: 1}
-    - _NormalizedVector1: {r: 0, g: 1, b: 0, a: 0}
-    - _NormalizedVector2: {r: 0, g: 1, b: 0, a: 0}
-    - _NormalizedVector3: {r: -0.28221625, g: -0.94072086, b: -0.18814416, a: 0}
-    - _NormalizedVector4: {r: 0, g: 1, b: 0, a: 0}
-    - _SkyTint: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
