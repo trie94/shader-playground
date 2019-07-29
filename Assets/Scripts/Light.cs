@@ -9,6 +9,6 @@ public class Light : MonoBehaviour
 
     void Update()
     {
-        transform.RotateAround(transform.position, cat.transform.up, 100*Time.deltaTime);
+        transform.RotateAround(transform.position, cat.transform.forward, 100*Time.deltaTime);
     }
 }
