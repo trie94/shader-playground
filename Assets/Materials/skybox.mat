@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: skybox
   m_Shader: {fileID: 4800000, guid: 1bd21c9be7f6f4549a0817ebff94e8d9, type: 3}
-  m_ShaderKeywords: _SUNDISK_HIGH_QUALITY _SWITCH2_ON _SWITCH3_ON
+  m_ShaderKeywords: _SUNDISK_HIGH_QUALITY _SWITCH2_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -61,7 +61,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Exponent1: 4.9
+    - _Exponent1: 20
     - _Exponent2: 1
     - _Exponent3: 20
     - _Exponent4: 1.9
@@ -80,7 +80,7 @@ Material:
     - _SunSize: 0.04
     - _SunSizeConvergence: 5
     - _Switch2: 1
-    - _Switch3: 1
+    - _Switch3: 0
     - _Switch4: 0
     - _UVSec: 0
     - _ZWrite: 1

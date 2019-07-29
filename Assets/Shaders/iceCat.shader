@@ -33,10 +33,7 @@
         // Background distortion
         Pass
         {
-            Tags
-            {
-                "Queue" = "Transparent"
-            }
+            Tags { "Queue" = "Transparent" }
 
             CGPROGRAM
             #pragma vertex vert
@@ -81,13 +78,20 @@
             ENDCG
         }
 
+        // main
         Pass
         {
+            Tags { "LightMode" = "ForwardBase" }
+            Cull Off
+			Blend SrcAlpha OneMinusSrcAlpha
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_fwdbase
 
             #include "UnityCG.cginc"
+            #include "AutoLight.cginc"
             #include "noise.cginc"
 
             struct appdata
@@ -103,7 +107,8 @@
                 float4 vertex : SV_POSITION;
                 float3 normal : NORMAL;
                 float4 localPos : TEXCOORD1;
-                float3 worldNormal : TEXCOORD3;
+                float3 worldNormal : TEXCOORD2;
+                SHADOW_COORDS(3)
             };
 
             sampler2D _MainTex;
@@ -123,6 +128,7 @@
                 o.localPos = v.vertex;
                 o.uv = v.uv;
                 o.normal = v.normal;
+                TRANSFER_SHADOW(o);
                 return o;
             }
 
@@ -145,7 +151,37 @@
                 col.rgb = rimColor.rgb + face.rgb * (1-rimColor.a);
                 col.a = max(face.a, rimColor.a);
 
-                return col * lighting;
+                float attenuation = SHADOW_ATTENUATION(i);
+
+                return col * lighting * attenuation;
+            }
+            ENDCG
+        }
+
+        Pass
+        {
+            Tags { "LightMode"="ShadowCaster" }
+
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma multi_compile_shadowcaster
+            #include "UnityCG.cginc"
+
+            struct v2f {
+                V2F_SHADOW_CASTER;
+            };
+
+            v2f vert(appdata_base v)
+            {
+                v2f o;
+                TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
+                return o;
+            }
+
+            float4 frag(v2f i) : SV_Target
+            {
+                SHADOW_CASTER_FRAGMENT(i)
             }
             ENDCG
         }
