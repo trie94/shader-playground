@@ -6,10 +6,10 @@ Shader "Unlit/ground"
     {
         _MainTex ("Texture", 2D) = "black" {}
         _Color ("Main Color", Color) = (1, 0, 0, 1)
-        _Specular ("Specular Color", Color) = (1, 0, 0, 1)
+        // _Specular ("Specular Color", Color) = (1, 0, 0, 1)
         _AmbientColor ("Ambient Color", Color) = (1, 0, 0, 1)
-        _NoiseFreq ("Noise Frequency", Range(0.0, 100.0)) = 2.0
-        _NoiseIntensity ("Noise Intensity", Range(0.0, 0.3)) = 0.1
+        _NoiseFreq ("Noise Frequency", Range(0.0, 10.0)) = 2.0
+        _NoiseIntensity ("Noise Intensity", Range(0.0, 1.0)) = 0.1
         _HeightOffset ("Height Offset", Range(-1.0, 0.5)) = 0.5
         _Shininess ("Shininess", Range(0.0, 3.0)) = 0.5
     }
@@ -66,25 +66,17 @@ Shader "Unlit/ground"
                 return n * 10;
             }
 
-            float offsetHeight(float x, float y)
-            {
-                float3 worldPos = float3(x, y, 0);
-                // vert.z = min(vert.z, snoise(vert * _NoiseFreq) * _NoiseIntensity + _HeightOffset);
-                worldPos.y += surface3(worldPos * _NoiseFreq) * _NoiseIntensity + _HeightOffset;
-                return worldPos.y;
-            }
-
             float offsetHeight(float3 worldPos)
             {
-                // vert.z = min(vert.z, snoise(float3(vert.x, vert.y, 0) * _NoiseFreq) * _NoiseIntensity + _HeightOffset);
-                worldPos.y += surface3(worldPos * _NoiseFreq) * _NoiseIntensity + _HeightOffset;
+                worldPos.y = snoise(worldPos * _NoiseFreq) * _NoiseIntensity + _HeightOffset;
+                // worldPos.y += surface3(worldPos * _NoiseFreq) * _NoiseIntensity + _HeightOffset;
                 return worldPos.y;
             }
 
             float3 getNormal( float3 p )
             {
                 float eps = 1e-4;
-                return normalize( float3( offsetHeight(p.x-eps,p.y) - offsetHeight(p.x+eps,p.y), 2.0f*eps, offsetHeight(p.x,p.y-eps) - offsetHeight(p.x,p.y+eps) ) );
+                return normalize( float3( offsetHeight(float3(p.x-eps, p.y, p.z)) - offsetHeight(float3(p.x+eps, p.y, p.z)), 2.0*eps, offsetHeight(float3(p.x,p.y, p.z-eps)) - offsetHeight(float3(p.x, p.y, p.z+eps))));
             }
 
             v2f vert (appdata v)
@@ -92,8 +84,8 @@ Shader "Unlit/ground"
                 v2f o;
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 o.localPos = v.vertex.xyz;
-                float4 worldPos = mul(unity_ObjectToWorld, float4(v.vertex.xyz, 1.0));
-                worldPos.y = offsetHeight(worldPos.xyz);
+                float3 worldPos = mul(unity_ObjectToWorld, float4(v.vertex.xyz, 1.0)).xyz;
+                worldPos.y = min(worldPos.y, offsetHeight(worldPos.xyz));
                 o.worldPos = worldPos;
                 o.vertex = UnityWorldToClipPos(worldPos);
                 o.uv = v.uv;
@@ -103,25 +95,22 @@ Shader "Unlit/ground"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float3 normal = getNormal(i.localPos);
-                float3 worldNormal = UnityObjectToWorldNormal(normal);
+                float3 worldNormal = getNormal(i.worldPos);
                 if (abs(i.worldNormal.y) < 1e-4)
                 {
                     worldNormal = i.worldNormal;
                 }
+
                 float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
-                float NdotL = saturate(dot(worldNormal, lightDir));
-                fixed4 color;
-
-                float3 worldView = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
-                float3 worldHalf = normalize(worldView + lightDir);
-
+                float NdotL = saturate(dot(worldNormal, lightDir) + 0.25);
                 fixed3 diffuse = _LightColor0.rgb * _Color.rgb * NdotL;
-                fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(worldNormal, worldHalf)), _Shininess);
 
-                // color.rgb = _Color.rgb * _LightColor0.rgb * NdotL + _AmbientColor * _AmbientColor.a;
-                // color.rgb = _Color.rgb * _LightColor0.rgb * NdotL;
-                color.rgb = diffuse + _AmbientColor * _AmbientColor.a;
+                // float3 worldView = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
+                // float3 worldHalf = normalize(worldView + lightDir);
+                // fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(worldNormal, worldHalf)), _Shininess);
+
+                fixed4 color;
+                color.rgb = _Color.rgb * _LightColor0.rgb * NdotL + _AmbientColor * _AmbientColor.a;
                 color.a = _Color.a;
 
                 // return fixed4(worldNormal * 0.5 + 0.5, 1.0);
