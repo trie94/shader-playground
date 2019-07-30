@@ -15,7 +15,7 @@ Shader "Unlit/ground"
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent"}
+        Tags { "RenderType"="Transparent" "Queue"="Transparent" "LightNode"="ForwardBase"}
         LOD 100
         Blend SrcAlpha OneMinusSrcAlpha
 
@@ -24,8 +24,10 @@ Shader "Unlit/ground"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_fwdbase
 
             #include "Lighting.cginc"
+            #include "AutoLight.cginc"
             #include "UnityCG.cginc"
             #include "noise.cginc"
 
@@ -41,19 +43,20 @@ Shader "Unlit/ground"
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
                 float3 normal : NORMAL;
-                float3 worldNormal : TEXCOORD2;
-                float3 localPos : TEXCOORD3;
-                float3 worldPos : TEXCOORD4;
+                float3 worldNormal : TEXCOORD1;
+                float3 localPos : TEXCOORD2;
+                float3 worldPos : TEXCOORD3;
+                SHADOW_COORDS(4)
             };
 
             sampler2D _MainTex;
             float _NoiseFreq;
             float _NoiseIntensity;
             float _HeightOffset;
-            float _Shininess;
+            // float _Shininess;
             fixed4 _Color;
             fixed4 _AmbientColor;
-            fixed4 _Specular;
+            // fixed4 _Specular;
 
             float surface3 (float3 coord)
             {
@@ -90,6 +93,7 @@ Shader "Unlit/ground"
                 o.vertex = UnityWorldToClipPos(worldPos);
                 o.uv = v.uv;
                 o.normal = v.normal;
+                TRANSFER_SHADOW(o);
                 return o;
             }
 
@@ -108,9 +112,10 @@ Shader "Unlit/ground"
                 // float3 worldView = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
                 // float3 worldHalf = normalize(worldView + lightDir);
                 // fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(worldNormal, worldHalf)), _Shininess);
+                float attenuation = SHADOW_ATTENUATION(i);
 
                 fixed4 color;
-                color.rgb = _Color.rgb * _LightColor0.rgb * NdotL + _AmbientColor * _AmbientColor.a;
+                color.rgb = _Color.rgb * _LightColor0.rgb * NdotL * attenuation + _AmbientColor * _AmbientColor.a;
                 color.a = _Color.a;
 
                 // return fixed4(worldNormal * 0.5 + 0.5, 1.0);

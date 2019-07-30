@@ -175,7 +175,7 @@
             v2f vert(appdata_base v)
             {
                 v2f o;
-                TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
+                TRANSFER_SHADOW_CASTER_NORMALOFFSET(o);
                 return o;
             }
 
