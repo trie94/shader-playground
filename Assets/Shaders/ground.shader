@@ -15,7 +15,7 @@ Shader "Unlit/ground"
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" "LightNode"="ForwardBase"}
+        Tags { "RenderType"="Transparent" "Queue"="Transparent" "LightMode" = "ForwardBase" }
         LOD 100
         Blend SrcAlpha OneMinusSrcAlpha
 
@@ -25,7 +25,6 @@ Shader "Unlit/ground"
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile_fwdbase
-
             #include "Lighting.cginc"
             #include "AutoLight.cginc"
             #include "UnityCG.cginc"
@@ -47,6 +46,7 @@ Shader "Unlit/ground"
                 float3 localPos : TEXCOORD2;
                 float3 worldPos : TEXCOORD3;
                 SHADOW_COORDS(4)
+                UNITY_LIGHTING_COORDS(5,6)
             };
 
             sampler2D _MainTex;
@@ -85,6 +85,8 @@ Shader "Unlit/ground"
             v2f vert (appdata v)
             {
                 v2f o;
+                UNITY_INITIALIZE_OUTPUT(v2f,o);
+
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 o.localPos = v.vertex.xyz;
                 float3 worldPos = mul(unity_ObjectToWorld, float4(v.vertex.xyz, 1.0)).xyz;
@@ -94,6 +96,7 @@ Shader "Unlit/ground"
                 o.uv = v.uv;
                 o.normal = v.normal;
                 TRANSFER_SHADOW(o);
+                UNITY_TRANSFER_LIGHTING(o,v.uv.xy);
                 return o;
             }
 
@@ -112,16 +115,21 @@ Shader "Unlit/ground"
                 // float3 worldView = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
                 // float3 worldHalf = normalize(worldView + lightDir);
                 // fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(worldNormal, worldHalf)), _Shininess);
-                float attenuation = SHADOW_ATTENUATION(i);
+                // float attenuation = SHADOW_ATTENUATION(i);
+                // float atten = 1;
+                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 
                 fixed4 color;
-                color.rgb = _Color.rgb * _LightColor0.rgb * NdotL * attenuation + _AmbientColor * _AmbientColor.a;
+                color.rgb = _Color.rgb * _LightColor0.rgb * NdotL * atten + _AmbientColor * _AmbientColor.a;
                 color.a = _Color.a;
 
-                // return fixed4(worldNormal * 0.5 + 0.5, 1.0);
+                // return fixed4(fixed3(atten, 0, 0), 1.0);
                 return color;
             }
             ENDCG
         }
+
+        // // shadow casting support
+        // UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
     }
 }
