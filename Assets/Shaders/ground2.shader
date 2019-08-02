@@ -1,4 +1,6 @@
-﻿Shader "Custom/ground2"
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+Shader "Custom/ground2"
 {
     Properties
     {
@@ -19,7 +21,7 @@
         LOD 200
 
         CGPROGRAM
-        #pragma surface surf Standard fullforwardshadows vertex:vert
+        #pragma surface surf Standard fullforwardshadows vertex:vert addshadow
         #pragma target 3.0
         #include "noise.cginc"
 
@@ -31,6 +33,7 @@
         fixed4 _AmbientColor;
         fixed _Glossiness;
         fixed _Metallic;
+        float4x4 _World2Camera;
 
         struct Input
         {
@@ -71,11 +74,17 @@
 
         void vert (inout appdata_full v, out Input o)
         {
+            float4 vertex_view = mul(_World2Camera, mul(unity_ObjectToWorld, v.vertex));
             float3 worldPos = mul(unity_ObjectToWorld, float4(v.vertex.xyz, 1.0)).xyz;
             worldPos.y = min(worldPos.y, offsetHeight(worldPos));
             v.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
             UNITY_INITIALIZE_OUTPUT(Input, o);
             o.wNormal = UnityObjectToWorldNormal(v.normal);
+            float3 worldNormal = getNormal(worldPos);
+            if (abs(o.wNormal.x) > 1e-8)
+            {
+                worldNormal.x = 0;
+            }
         }
 
         void surf (Input IN, inout SurfaceOutputStandard o)
