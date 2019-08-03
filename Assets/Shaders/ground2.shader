@@ -13,11 +13,12 @@ Shader "Custom/ground2"
         _HeightOffset ("Height Offset", Range(-3.0, 0.5)) = 0.5
         _Metallic ("Metallic", Range(0.0, 3.0)) = 0.5
         _Glossiness ("Glossiness", Range(0.0, 3.0)) = 0.5
+        _NoiseSeed ("Noise Seed", Range(0.0, 10.0)) = 1.0
     }
 
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+        Tags { "RenderType"="Opaque" }
         LOD 200
 
         CGPROGRAM
@@ -34,6 +35,7 @@ Shader "Custom/ground2"
         fixed _Glossiness;
         fixed _Metallic;
         float4x4 _World2Camera;
+        float _NoiseSeed;
 
         struct Input
         {
@@ -58,7 +60,7 @@ Shader "Custom/ground2"
 
         float offsetHeight(float3 p)
         {
-            p.y = 0;
+            p.y = _NoiseSeed;
             return snoise(p * _NoiseFreq) * _NoiseIntensity + _HeightOffset;
         }
 
@@ -74,27 +76,26 @@ Shader "Custom/ground2"
 
         void vert (inout appdata_full v, out Input o)
         {
-            float4 vertex_view = mul(_World2Camera, mul(unity_ObjectToWorld, v.vertex));
             float3 worldPos = mul(unity_ObjectToWorld, float4(v.vertex.xyz, 1.0)).xyz;
             worldPos.y = min(worldPos.y, offsetHeight(worldPos));
             v.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
             UNITY_INITIALIZE_OUTPUT(Input, o);
             o.wNormal = UnityObjectToWorldNormal(v.normal);
-            float3 worldNormal = getNormal(worldPos);
-            if (abs(o.wNormal.x) > 1e-8)
-            {
-                worldNormal.x = 0;
-            }
+            // float3 worldNormal = getNormal(worldPos);
+            // if (abs(o.wNormal.x) > 1e-8)
+            // {
+            //     worldNormal.x = 0;
+            // }
         }
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             float3 worldNormal = getNormal(IN.worldPos);
-            if (abs(IN.wNormal.x) > 1e-8)
+            if (abs(IN.wNormal.y) < 1)
             {
-                // worldNormal = IN.wNormal;
-                worldNormal.x = 0;
-                // worldNormal = normalize(worldNormal);
+                worldNormal = IN.wNormal;
+                worldNormal.y = 0;
+                worldNormal = normalize(worldNormal);
                 // o.Emission = fixed3(1,0,0);
             }
 

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ground2
+  m_Name: subGround
   m_Shader: {fileID: 4800000, guid: 48642eb2b0d5448faa2e9f4702a34e8c, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -61,13 +61,14 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0
+    - _Glossiness: 0.26
     - _GlossyReflections: 1
-    - _HeightOffset: 0.21
+    - _HeightOffset: -0.19
     - _Metallic: 0
     - _Mode: 0
-    - _NoiseFreq: 0.72
-    - _NoiseIntensity: 0.66
+    - _NoiseFreq: 0.567
+    - _NoiseIntensity: 0.65
+    - _NoiseSeed: 2.96
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
@@ -77,5 +78,5 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 1, g: 0, b: 0, a: 1}
-    - _Color: {r: 0.25429636, g: 0.4528302, b: 0.07475969, a: 1}
+    - _Color: {r: 0.17377181, g: 0.32783255, b: 0.5188679, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

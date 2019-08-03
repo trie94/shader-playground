@@ -1,18 +1,14 @@
 fileFormatVersion: 2
-guid: 90aca2913ce2644bbbb20802a00f2e4c
+guid: 0c7d17ddebee14b06beff5f1ed8088d5
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Bedroom_DoorWall
-    100002: //RootNode
-    100004: BedroomWall
-    400000: Bedroom_DoorWall
-    400002: //RootNode
-    400004: BedroomWall
-    2100000: lambert2
-    2300000: Bedroom_DoorWall
-    3300000: Bedroom_DoorWall
-    4300000: Bedroom_DoorWall
+    100000: //RootNode
+    400000: //RootNode
+    2100000: No Name
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cylinder
   externalObjects: {}
   materials:
     importMaterials: 1
