@@ -91,7 +91,7 @@ Shader "Custom/ground2"
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             float3 worldNormal = getNormal(IN.worldPos);
-            if (abs(IN.wNormal.y) < 1)
+            if (abs(IN.wNormal.y) < 1e-4)
             {
                 worldNormal = IN.wNormal;
                 worldNormal.y = 0;

@@ -67,7 +67,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _NoiseFreq: 0.766
-    - _NoiseIntensity: 0.71
+    - _NoiseIntensity: 0.59
     - _NoiseSeed: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
