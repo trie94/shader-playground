@@ -13,17 +13,17 @@
         _Metallic ("Metallic", Range(0.0, 3.0)) = 0.5
         _Glossiness ("Glossiness", Range(0.0, 3.0)) = 0.5
         _NoiseSeed ("Noise Seed", Range(0.0, 10.0)) = 1.0
-        _Offset ("Offset", Range(0.0, 10.0)) = 1.0
         _Speed ("Speed", Range(0.0, 2.0)) = 1.0
     }
 
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+        Tags { "RenderType"="Transparent" "Queue"="AlphaTest" }
         LOD 200
+        // Cull Back
 
         CGPROGRAM
-        #pragma surface surf Standard fullforwardshadows vertex:vert addshadow alpha:fade
+        #pragma surface surf Standard fullforwardshadows vertex:vert alpha:fade
         #pragma target 3.0
         #include "noise.cginc"
 
@@ -36,9 +36,7 @@
         fixed4 _AmbientColor;
         fixed _Glossiness;
         fixed _Metallic;
-        float4x4 _World2Camera;
         float _NoiseSeed;
-        float _Offset;
         float _Speed;
 
         struct Input
@@ -50,17 +48,6 @@
 
         UNITY_INSTANCING_BUFFER_START(Props)
         UNITY_INSTANCING_BUFFER_END(Props)
-
-        float surface3 (float3 coord)
-        {
-            float n = 0.0;
-            n += 1.0 * abs(snoise(coord));
-            n += 0.5 * abs(snoise(coord * 2.0));
-            n += 0.25 * abs(snoise(coord * 4.0));
-            n += 0.125 * abs(snoise(coord * 8.0));
-
-            return n * 10;
-        }
 
         float offsetHeight(float3 p)
         {

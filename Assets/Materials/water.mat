@@ -8,12 +8,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: water
-  m_Shader: {fileID: 4800000, guid: 8df76ba0f51a24a91b6b2c224c0a4d68, type: 3}
+  m_Shader: {fileID: 4800000, guid: 9a9a5f25228054b3cb05d2c6dd91f226, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3002
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -92,5 +92,7 @@ Material:
     - _AmbientColor: {r: 0.6084906, g: 0.8737066, b: 1, a: 0.3647059}
     - _Color: {r: 0, g: 0.7530308, b: 1, a: 0.047058824}
     - _Color2: {r: 0.48627448, g: 0.8648321, b: 1, a: 0.16862746}
+    - _ColorA: {r: 1, g: 0, b: 0, a: 1}
+    - _ColorB: {r: 1, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Specular: {r: 1, g: 1, b: 1, a: 1}

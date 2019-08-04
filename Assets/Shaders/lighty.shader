@@ -8,7 +8,7 @@
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+        Tags { "RenderType"="Opaque" }
         LOD 100
 
         Pass
@@ -38,7 +38,6 @@
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
 

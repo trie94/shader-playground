@@ -27,13 +27,14 @@
 
         GrabPass
         {
+            Tags { "LightMode" = "Always" "RenderType"="GrabPass" "PreviewType"="Plane" "ForceNoShadowCasting"="True"}
             "_BackgroundTexture"
         }
-
+        
         // Background distortion
         Pass
         {
-            Tags { "Queue" = "Transparent" }
+            Tags { "RenderType"="Transparent" "Queue" = "Transparent" }
 			Blend SrcAlpha OneMinusSrcAlpha
 
             CGPROGRAM
@@ -69,14 +70,17 @@
 
                 // distort based on bump map
                 float3 bump = tex2Dlod(_BumpTex, o.pos).rgb;
-                // o.grabPos.x += bump.x * _DistortStrength;
-                // o.grabPos.y += bump.y * _DistortStrength;
+                o.grabPos.x += bump.x * _DistortStrength;
+                o.grabPos.y += bump.y * _DistortStrength;
                 return o;
             }
 
             float4 frag(v2f i) : COLOR
             {
-                fixed4 col = tex2Dproj(_BackgroundTexture, i.grabPos);
+                fixed4 col;
+                // col.rgb = tex2Dproj(_BackgroundTexture, i.grabPos).rgb + tex2Dproj(_BackgroundTexture, 1-i.grabPos).rgb * (1-tex2Dproj(_BackgroundTexture, i.grabPos).a);
+                col.rgb = tex2Dproj(_BackgroundTexture, i.grabPos).rgb;
+                col.a = 1;
                 return col;
             }
             ENDCG
@@ -191,7 +195,8 @@
             #pragma multi_compile_shadowcaster
             #include "UnityCG.cginc"
 
-            struct v2f {
+            struct v2f
+            {
                 V2F_SHADOW_CASTER;
             };
 
