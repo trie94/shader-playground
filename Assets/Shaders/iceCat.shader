@@ -34,6 +34,7 @@
         Pass
         {
             Tags { "Queue" = "Transparent" }
+			Blend SrcAlpha OneMinusSrcAlpha
 
             CGPROGRAM
             #pragma vertex vert
@@ -48,6 +49,7 @@
             struct appdata
             {
                 float4 vertex : POSITION;
+                float4 uv : TEXCOORD0;
                 float3 normal : NORMAL;
             };
 
@@ -55,6 +57,7 @@
             {
                 float4 pos : SV_POSITION;
                 float4 grabPos : TEXCOORD0;
+                float2 uv : TEXCOORD1;
             };
 
             v2f vert(appdata v)
@@ -62,18 +65,19 @@
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex); // screen space
                 o.grabPos = ComputeGrabScreenPos(o.pos);
+                o.uv = v.uv;
 
                 // distort based on bump map
                 float3 bump = tex2Dlod(_BumpTex, o.pos).rgb;
-                o.grabPos.x += bump.x * _DistortStrength;
-                o.grabPos.y += bump.y * _DistortStrength;
-
+                // o.grabPos.x += bump.x * _DistortStrength;
+                // o.grabPos.y += bump.y * _DistortStrength;
                 return o;
             }
 
             float4 frag(v2f i) : COLOR
             {
-                return tex2Dproj(_BackgroundTexture, i.grabPos);
+                fixed4 col = tex2Dproj(_BackgroundTexture, i.grabPos);
+                return col;
             }
             ENDCG
         }
@@ -108,7 +112,8 @@
                 float3 normal : NORMAL;
                 float4 localPos : TEXCOORD1;
                 float3 worldNormal : TEXCOORD2;
-                SHADOW_COORDS(3)
+                float4 worldPos : TEXCOORD3;
+                SHADOW_COORDS(4)
             };
 
             sampler2D _MainTex;
@@ -124,7 +129,7 @@
                 v2f o;
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 o.vertex = UnityObjectToClipPos(v.vertex);
-
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
                 o.localPos = v.vertex;
                 o.uv = v.uv;
                 o.normal = v.normal;
@@ -141,8 +146,27 @@
                 fixed4 rimColor = _RimColor;
                 rimColor.a *= saturate(rim + 0.2);
 
+                float attenuation = SHADOW_ATTENUATION(i);
+                float3 lightDir;
+                if (0.0 == _WorldSpaceLightPos0.w) // directional light?
+                {
+                    attenuation = 1.0; // no attenuation
+                    lightDir = normalize(_WorldSpaceLightPos0.xyz);
+                } 
+                else // point or spot light
+                {
+                    float4 lightPosition = float4(unity_4LightPosX0[0], 
+                    unity_4LightPosY0[0], 
+                    unity_4LightPosZ0[0], 1.0);
+
+                    float3 vertexToLightSource = lightPosition.xyz - i.worldPos.xyz;
+                    float distance = length(vertexToLightSource);
+                    attenuation = 1.0 / distance; // linear attenuation 
+                    lightDir = normalize(vertexToLightSource);
+                }
+
                 float3 bump = normalize(snoise(i.localPos.xyz * _NoiseFreq).xxx * _NoiseIntensity + i.worldNormal.xyz);
-                float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
+                // float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
                 float ramp = saturate(dot(bump, lightDir));
                 float4 lighting = float4(tex2D(_BumpRamp, float2(ramp, 0.5)).rgb, 1.0);
 
@@ -151,9 +175,8 @@
                 col.rgb = rimColor.rgb + face.rgb * (1-rimColor.a);
                 col.a = max(face.a, rimColor.a);
 
-                float attenuation = SHADOW_ATTENUATION(i);
-
-                return col * lighting * attenuation;
+                // return col * lighting * attenuation;
+                return col * lighting;
             }
             ENDCG
         }

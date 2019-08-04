@@ -241,6 +241,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -344,6 +345,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -508,6 +510,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -703,6 +706,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -929,6 +933,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1060,7 +1065,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2496043160074739260}
-  m_LocalRotation: {x: 1.5195672e-16, y: -0.047065202, z: 4.5123e-16, w: 0.99889183}
+  m_LocalRotation: {x: 1.5207772e-16, y: -0.04710268, z: 4.515893e-16, w: 0.99889004}
   m_LocalPosition: {x: -0.0213605, y: 0.000000005353687, z: -1.8472368e-10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1091,14 +1096,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2496043160074739262}
-  m_LocalRotation: {x: -0.013334499, y: -0.70698106, z: 0.013334499, w: 0.706981}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 6.920595e-18, y: 0.003707372, z: 0.0050805137}
   m_LocalScale: {x: 0.99999994, y: 0.9999998, z: 0.99999994}
   m_Children:
   - {fileID: 2496043160074699280}
   m_Father: {fileID: 2496043160074699344}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &2496043160074739296
 GameObject:
   m_ObjectHideFlags: 0
@@ -1308,6 +1313,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1570,6 +1576,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1705,6 +1712,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1811,7 +1819,7 @@ Transform:
   m_GameObject: {fileID: 2496043160074739326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.76, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 2496043160074699348}
   - {fileID: 2496043160074699350}
@@ -1860,4 +1868,20 @@ MonoBehaviour:
   frontRight: {fileID: 2496043160074699368}
   backLeft: {fileID: 2496043160074699332}
   backRight: {fileID: 2496043160074699390}
+  tailCore: {fileID: 2496043160074699294}
+  tail1: {fileID: 2496043160074699280}
+  tail2: {fileID: 2496043160074699282}
+  tail3: {fileID: 2496043160074699292}
+  head: {fileID: 2496043160074699352}
+  leftEar: {fileID: 2496043160074699340}
+  rightEar: {fileID: 2496043160074699366}
+  body: {fileID: 2496043160074739318}
+  faceTextures:
+  - {fileID: 2800000, guid: 365fca35092004b7587747766441e712, type: 3}
+  - {fileID: 2800000, guid: daefddb78a500457ebd5b3b5ab612080, type: 3}
+  - {fileID: 2800000, guid: 034c7e96421554cb0938ca5457d25c51, type: 3}
+  - {fileID: 2800000, guid: daefddb78a500457ebd5b3b5ab612080, type: 3}
   speed: 1
+  tailSpeed: 0.5
+  pathNodes:
+  - {fileID: 0}

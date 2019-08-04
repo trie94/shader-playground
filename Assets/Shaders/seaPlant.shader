@@ -14,14 +14,13 @@
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent"}
+        Tags { "RenderType"="Opaque" }
         LOD 200
 
         CGPROGRAM
-        #pragma surface surf Standard fullforwardshadows vertex:vert alpha:fade
+        #pragma surface surf Standard fullforwardshadows vertex:vert addshadow
         #pragma target 3.0
         #include "noise.cginc"
-
 
         sampler2D _MainTex;
         half _Glossiness;
@@ -36,7 +35,6 @@
         struct Input
         {
             float2 uv_MainTex;
-            // float3 worldPos;
             float3 localPos;
         };
 
@@ -52,9 +50,6 @@
             v.vertex.z += step(0, v.vertex.y) * z * _SwayMax;
             UNITY_INITIALIZE_OUTPUT(Input, o);
             o.localPos = v.vertex.xyz;
-
-            // v.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
-            // o.worldPos = worldPos;
         }
 
         void surf (Input IN, inout SurfaceOutputStandard o)
