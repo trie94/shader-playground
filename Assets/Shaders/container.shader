@@ -1,6 +1,4 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "Unlit/container"
+﻿Shader "Unlit/container"
 {
     Properties
     {
@@ -105,45 +103,20 @@ Shader "Unlit/container"
 	            float4 vertex : POSITION;
                 float3 normal : NORMAL;
             };
-            
-            // struct v2f
-            // {
-            //     float4 localPos : TEXCOORD0;
-            // };
 
             float4 vert (appdata v) : SV_POSITION
             {
-                // v2f o;
                 float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
                 half rim = saturate(1.0 - dot(normalize(v.normal), lightDir));
                 rim = step(0.6, rim);
                 float4 localPos = UnityClipSpaceShadowCasterPos(v.vertex.xyz, rim);
-                // o.localPos = localPos;
 	            return UnityApplyLinearShadowBias(localPos);
-                // return o;
             }
 
             float4 frag () : SV_TARGET
             {
                 return 0;
             }
-
-            // struct v2f
-            // {
-            //     V2F_SHADOW_CASTER;
-            // };
-
-            // v2f vert(appdata_base v)
-            // {
-            //     v2f o;
-            //     TRANSFER_SHADOW_CASTER_NORMALOFFSET(o);
-            //     return o;
-            // }
-
-            // float4 frag(v2f i) : SV_Target
-            // {
-            //     SHADOW_CASTER_FRAGMENT(i)
-            // }
             ENDCG
         }
     }
