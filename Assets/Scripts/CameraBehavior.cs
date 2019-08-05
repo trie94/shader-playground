@@ -6,9 +6,16 @@ public class CameraBehavior : MonoBehaviour
 {
     [SerializeField]
     Transform target;
+    Vector3 offset;
+
+    void Start()
+    {
+        offset = transform.position - target.position;
+    }
 
     void LateUpdate()
     {
-        this.transform.RotateAround(target.position, Vector3.up, Time.deltaTime * 2);
+        transform.position = target.position + offset;
+        transform.LookAt(target.position);
     }
 }

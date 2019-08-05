@@ -16,22 +16,17 @@ public class Lighty : MonoBehaviour
     Vector3 target;
     bool isClicked;
 
-    System.Action OnMouseClick;
+    // System.Action OnMouseClick;
     Camera mainCamera;
     
     void Start()
     {
-        OnMouseClick += UpdateTarget;
+        InputManager.Instance.OnMouseClick += UpdateTarget;
         mainCamera = Camera.main;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnMouseClick?.Invoke();
-        }
-
         float distSq = (mainBody.position - target).sqrMagnitude;
         if (distSq > 0.1f)
         {
@@ -51,13 +46,14 @@ public class Lighty : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit)) {
+        if (Physics.Raycast(ray, out hit))
+        {
             target = hit.point;
         }
     }
 
     void OnDisable()
     {
-        OnMouseClick -= UpdateTarget;
+        InputManager.Instance.OnMouseClick -= UpdateTarget;
     }
 }

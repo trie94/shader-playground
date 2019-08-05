@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: skybox
   m_Shader: {fileID: 4800000, guid: 1bd21c9be7f6f4549a0817ebff94e8d9, type: 3}
-  m_ShaderKeywords: _SUNDISK_HIGH_QUALITY _SWITCH2_ON
+  m_ShaderKeywords: _SUNDISK_HIGH_QUALITY
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -61,11 +61,11 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Exponent1: 20
+    - _Exponent1: 2.03
     - _Exponent2: 1
     - _Exponent3: 20
     - _Exponent4: 1.9
-    - _Exposure: 1
+    - _Exposure: 0.8
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -79,15 +79,15 @@ Material:
     - _SunDisk: 2
     - _SunSize: 0.04
     - _SunSizeConvergence: 5
-    - _Switch2: 1
+    - _Switch2: 0
     - _Switch3: 0
     - _Switch4: 0
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0, g: 0.05765202, b: 0.5188679, a: 1}
+    - _BaseColor: {r: 0, g: 0.1254902, b: 0.83137256, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 1, g: 0.7411765, b: 0.8784314, a: 1}
+    - _Color1: {r: 0.60382754, g: 1, b: 0.9646866, a: 1}
     - _Color2: {r: 0.5990566, g: 1, b: 0.9640238, a: 1}
     - _Color3: {r: 0.09264862, g: 0.09433961, b: 0.085884646, a: 1}
     - _Color4: {r: 1, g: 1, b: 0, a: 1}
