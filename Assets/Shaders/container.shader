@@ -1,4 +1,6 @@
-﻿Shader "Unlit/container"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Unlit/container"
 {
     Properties
     {
@@ -11,77 +13,13 @@
         _NoiseFreq ("Noise Frequency", Range(0.0, 20.0)) = 2.0
         _NoiseIntensity ("Noise Intensity", Range(0.0, 1.0)) = 0.5
         _BumpTex ("Bump Texture", 2D) = "white" {}
-        _DistortStrength ("Distort Strength", Range(0.0, 3.0)) = 1.0
     }
     SubShader
     {
         Tags { "RenderType"="Transparent" "Queue"="Transparent"}
         LOD 100
         Blend SrcAlpha OneMinusSrcAlpha
-        // Cull Back
-
-        // Pass
-        // {
-        //     ZWrite On
-        //     ColorMask 0
-        // }
-
-        // GrabPass
-        // {
-        //     "_BackgroundTexture"
-        // }
-
-        // Background distortion
-        // Pass
-        // {
-        //     Tags
-        //     {
-        //         "Queue" = "Transparent"
-        //     }
-
-        //     CGPROGRAM
-        //     #pragma vertex vert
-        //     #pragma fragment frag
-        //     #include "UnityCG.cginc"
-
-        //     // Properties
-        //     sampler2D _BackgroundTexture;
-        //     sampler2D _BumpTex;
-        //     float     _DistortStrength;
-
-        //     struct appdata
-        //     {
-        //         float4 vertex : POSITION;
-        //         float3 normal : NORMAL;
-        //     };
-
-        //     struct v2f
-        //     {
-        //         float4 pos : SV_POSITION;
-        //         float4 grabPos : TEXCOORD0;
-        //     };
-
-        //     v2f vert(appdata v)
-        //     {
-        //         v2f o;
-        //         o.pos = UnityObjectToClipPos(v.vertex); // screen space
-        //         o.grabPos = ComputeGrabScreenPos(o.pos);
-
-        //         // distort based on bump map
-        //         float3 bump = tex2Dlod(_BumpTex, o.pos).rgb;
-        //         o.grabPos.x += bump.x * _DistortStrength;
-        //         o.grabPos.y += bump.y * _DistortStrength;
-
-        //         return o;
-        //     }
-
-        //     float4 frag(v2f i) : COLOR
-        //     {
-        //         return tex2Dproj(_BackgroundTexture, i.grabPos);
-        //     }
-        //     ENDCG
-        // }
-
+        
         Pass
         {
             CGPROGRAM
@@ -110,7 +48,7 @@
             sampler2D _MainTex;
             sampler2D _BumpRamp;
             fixed4 _RimColor;
-            fixed _RimPower;
+            float _RimPower;
             fixed4 _FaceColor;
             float _NoiseFreq;
             float _NoiseIntensity;
@@ -160,23 +98,52 @@
             #pragma fragment frag
             #pragma multi_compile_shadowcaster
             #include "UnityCG.cginc"
+            #include "AutoLight.cginc"
 
-            struct v2f
+            struct appdata
             {
-                V2F_SHADOW_CASTER;
+	            float4 vertex : POSITION;
+                float3 normal : NORMAL;
             };
+            
+            // struct v2f
+            // {
+            //     float4 localPos : TEXCOORD0;
+            // };
 
-            v2f vert(appdata_base v)
+            float4 vert (appdata v) : SV_POSITION
             {
-                v2f o;
-                TRANSFER_SHADOW_CASTER_NORMALOFFSET(o);
-                return o;
+                // v2f o;
+                float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
+                half rim = saturate(1.0 - dot(normalize(v.normal), lightDir));
+                rim = step(0.6, rim);
+                float4 localPos = UnityClipSpaceShadowCasterPos(v.vertex.xyz, rim);
+                // o.localPos = localPos;
+	            return UnityApplyLinearShadowBias(localPos);
+                // return o;
             }
 
-            float4 frag(v2f i) : SV_Target
+            float4 frag () : SV_TARGET
             {
-                SHADOW_CASTER_FRAGMENT(i)
+                return 0;
             }
+
+            // struct v2f
+            // {
+            //     V2F_SHADOW_CASTER;
+            // };
+
+            // v2f vert(appdata_base v)
+            // {
+            //     v2f o;
+            //     TRANSFER_SHADOW_CASTER_NORMALOFFSET(o);
+            //     return o;
+            // }
+
+            // float4 frag(v2f i) : SV_Target
+            // {
+            //     SHADOW_CASTER_FRAGMENT(i)
+            // }
             ENDCG
         }
     }
