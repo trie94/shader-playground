@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/ice.unity
+    guid: 8c2ef85feaccd43f4983d49374920039
   m_configObjects: {}
