@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CatBehavior : MonoBehaviour
 {
+    #region animation
     [Header("legs")]
     [SerializeField]
     Transform frontLeft;
@@ -48,10 +49,6 @@ public class CatBehavior : MonoBehaviour
     [SerializeField]
     float tailSpeed = 0.5f;
 
-    [SerializeField]
-    Transform[] pathNodes;
-    int nodeIndex;
-
     float rotationValue = 25f;
     float frontLeftOriginalAngle;
     float frontRightOriginalAngle;
@@ -63,6 +60,18 @@ public class CatBehavior : MonoBehaviour
     float tail3OriginalAngle;
 
     Renderer bodyRenderer;
+    #endregion
+    #region path
+
+    [SerializeField]
+    private int lineSteps = 10;
+    private float progress = 0f;
+    [SerializeField]
+    private float duration = 10f;
+
+    [SerializeField]
+    Path path;
+    #endregion
 
     void Start()
     {
@@ -79,16 +88,29 @@ public class CatBehavior : MonoBehaviour
         StartCoroutine(PlayFaceAnim());
     }
 
+    void Update()
+    {
+        progress += Time.deltaTime / duration;
+		if (progress > 1f) progress = 0f;
+
+        Vector3 target = path.GetPoint(path.nodes, progress);
+        Vector3 lookDir = target - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(lookDir, Vector3.up);
+
+        transform.rotation = rotation;
+		transform.position = target;
+    }
+
     void LateUpdate()
     {
         // transform.position = Vector3.Lerp(transform.position, pathNodes[0].position, 0.01f);
         // Vector3 forward = (pathNodes[0].position - transform.position).normalized;
         // transform.rotation = Quaternion.LookRotation(forward);
 
-        rotateLeg(frontLeft, frontLeftOriginalAngle);
-        rotateLeg(frontRight, frontRightOriginalAngle);
-        rotateLeg(backLeft, backLeftOriginalAngle, -1f);
-        rotateLeg(backRight, backRightOriginalAngle, -1f);
+        rotateLimb(frontLeft, frontLeftOriginalAngle, speed);
+        rotateLimb(frontRight, frontRightOriginalAngle, speed);
+        rotateLimb(backLeft, backLeftOriginalAngle, speed, -1f);
+        rotateLimb(backRight, backRightOriginalAngle, speed, -1f);
 
         // tail
         tailCore.rotation = Quaternion.Euler(tailCore.eulerAngles.x, tailCore.eulerAngles.y, (Mathf.Sin(Mathf.PI * Time.time * tailSpeed) * rotationValue * 0.5f) + tailCoreOriginalAngle);
@@ -100,7 +122,7 @@ public class CatBehavior : MonoBehaviour
         head.rotation = Quaternion.Euler(head.eulerAngles.x, head.eulerAngles.y, Mathf.Sin(Mathf.PI * Time.time * speed) * rotationValue * 0.5f);
     }
 
-    void rotateLeg(Transform target, float targetOriginalAngle, float back = 1f)
+    void rotateLimb(Transform target, float targetOriginalAngle, float speed, float back = 1f)
     {
         target.rotation = Quaternion.Euler(target.eulerAngles.x, target.eulerAngles.y, (Mathf.Sin(Mathf.PI * Time.time * speed * back) * rotationValue) + targetOriginalAngle);
     }
@@ -116,4 +138,8 @@ public class CatBehavior : MonoBehaviour
             yield return new WaitForSeconds(0.1f * defaultFace);
         }
     }
+
+    // public Vector3 GetPoint (Vector3 p0, Vector3 p1, Vector3 p2, float t) {
+	// 	return Bezier.GetPoint(p0, p1, p2, t);
+	// }
 }

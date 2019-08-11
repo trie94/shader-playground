@@ -16,7 +16,6 @@ public class Lighty : MonoBehaviour
     Vector3 target;
     bool isClicked;
 
-    // System.Action OnMouseClick;
     Camera mainCamera;
     
     void Start()
@@ -54,6 +53,9 @@ public class Lighty : MonoBehaviour
 
     void OnDisable()
     {
-        InputManager.Instance.OnMouseClick -= UpdateTarget;
+        if (InputManager.Instance!= null) 
+        {
+            InputManager.Instance.OnMouseClick -= UpdateTarget;
+        }
     }
 }

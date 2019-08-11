@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
@@ -17,7 +18,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public System.Action OnMouseClick;
+    public Action OnMouseClick;
 
     private void Update()
     {

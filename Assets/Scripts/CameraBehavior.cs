@@ -13,9 +13,9 @@ public class CameraBehavior : MonoBehaviour
         offset = transform.position - target.position;
     }
 
-    void LateUpdate()
-    {
-        transform.position = target.position + offset;
-        transform.LookAt(target.position);
-    }
+    // void LateUpdate()
+    // {
+    //     transform.position = target.position + offset;
+    //     transform.LookAt(target.position);
+    // }
 }

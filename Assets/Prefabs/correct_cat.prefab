@@ -1883,5 +1883,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: daefddb78a500457ebd5b3b5ab612080, type: 3}
   speed: 1
   tailSpeed: 0.5
-  pathNodes:
-  - {fileID: 0}
+  lineSteps: 10
+  duration: 30
+  path: {fileID: 0}
