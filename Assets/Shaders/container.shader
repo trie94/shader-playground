@@ -106,10 +106,10 @@
 
             float4 vert (appdata v) : SV_POSITION
             {
-                // float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
-                // half rim = saturate(1.0 - dot(normalize(v.normal), lightDir));
-                // rim = step(0.6, rim);
-                float4 localPos = UnityClipSpaceShadowCasterPos(v.vertex.xyz, 0);
+                float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
+                half rim = saturate(1.0 - dot(normalize(v.normal), lightDir));
+                rim = step(0.6, rim);
+                float4 localPos = UnityClipSpaceShadowCasterPos(v.vertex.xyz, rim);
 	            return UnityApplyLinearShadowBias(localPos);
             }
 
