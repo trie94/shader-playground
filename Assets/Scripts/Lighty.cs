@@ -16,12 +16,9 @@ public class Lighty : MonoBehaviour
     Vector3 target;
     bool isClicked;
 
-    Camera mainCamera;
-    
     void Start()
     {
         InputManager.Instance.OnMouseClick += UpdateTarget;
-        mainCamera = Camera.main;
     }
 
     void Update()
@@ -42,7 +39,8 @@ public class Lighty : MonoBehaviour
 
     void UpdateTarget()
     {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if(CameraController.Instance.cameraIndex == 1) return;
+        Ray ray = CameraController.Instance.cameras[CameraController.Instance.cameraIndex].ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))

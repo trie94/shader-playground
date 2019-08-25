@@ -19,12 +19,23 @@ public class InputManager : MonoBehaviour
     }
 
     public Action OnMouseClick;
+    public Action OnSwtichCamera;
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             OnMouseClick?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnSwtichCamera?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 }
