@@ -1,0 +1,19 @@
+{
+  "name": "com.yein.shaderlibrary",
+  "displayName": "Shader Library",
+  "version": "1.0.0",
+  "unity": "2019.1",
+  "description": "Shaders are amazing",
+  "keywords": [
+    "vfx",
+    "shaders"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "",
+    "revision": ""
+  },
+  "author": {
+    "name": "Yein"
+  }
+}
